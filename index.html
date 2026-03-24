@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<!-- V2 Bold SaaS | GitHub→Vercel | AI Website Factory -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaya Beauty Studio | Premium Aesthetic Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --text: #f0f0ff;
+            --muted: #8888aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --glow: #2c3e5040;
+            --glass: rgba(255, 255, 255, 0.04);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- CURSOR --- */
+        #cursor-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.15) 0%, transparent 70%);
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            #cursor-glow { display: block; }
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .cta-btn {
+            background: #fff;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 0 20px var(--glow);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            overflow: hidden;
+        }
+
+        .hero-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 20s infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-10%, -10%) scale(1); }
+            100% { transform: translate(20%, 20%) scale(1.2); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            line-height: 0.9;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -3px;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 0;
+        }
+
+        .hero-image-container {
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            animation: bounce 4s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* --- BENTO SERVICES --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .bento-card {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .bento-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .bento-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            z-index: 1;
+        }
+
+        .bento-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            z-index: 1;
+        }
+
+        .bento-card i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+
+        /* --- ABOUT --- */
+        .about-section {
+            background: var(--surface);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .section-tag {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .test-card {
+            padding: 2rem;
+        }
+
+        .rating {
+            color: #f1c40f;
+            margin-bottom: 1rem;
+        }
+
+        .test-card p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        /* --- GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* --- CALL TO ACTION --- */
+        .cta-banner {
+            margin: 100px 0;
+            background: linear-gradient(90deg, #111118 0%, var(--primary) 50%, #111118 100%);
+            padding: 100px 0;
+            text-align: center;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+        }
+
+        /* --- CONTACT --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 4rem;
+        }
+
+        .info-card {
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .info-icon {
+            background: var(--primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .map-container {
+            height: 100%;
+            min-height: 400px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .hero-content, .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-text h1 { font-size: 3.5rem; }
+            .span-6, .span-4 { grid-column: span 12; }
+            .testimonials-grid, .gallery-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .cta-banner h2 { font-size: 2.5rem; }
+        }
+
+        /* ANIMATIONS */
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .glow-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            animation: shine 3s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+
+    <header id="header">
+        <div class="container nav">
+            <a href="#" class="logo">KAYA <span style="color:var(--accent)">BEAUTY.</span></a>
+            <div class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#testimonials">Reviews</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+                <a href="https://wa.me/919936445695" target="_blank" class="cta-btn glow-btn">BOOK NOW</a>
+            </div>
+            <!-- Mobile burger could go here -->
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-orb" style="top: -10%; right: -10%;"></div>
+        <div class="hero-orb" style="bottom: -10%; left: -10%; background: var(--accent); opacity: 0.2;"></div>
+        
+        <div class="container hero-content">
+            <div class="hero-text">
+                <span class="section-tag reveal">Est. 2010 • Kanpur's Finest</span>
+                <h1 class="reveal">Elevate Your <span class="gradient-text">Radiance.</span></h1>
+                <p class="reveal">Experience high-end beauty engineering. We combine professional clinical techniques with luxury artistry to redefine your aesthetic standard.</p>
+                <div class="hero-stats reveal">
+                    <div class="stat-item">
+                        <h3 data-count="10">0</h3>
+                        <p>K+ Clients</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 data-count="4.7">0</h3>
+                        <p>Rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 data-count="15">0</h3>
+                        <p>Awards</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image-container reveal">
+                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=85" alt="Kaya Beauty Interior" class="hero-image">
+                <div class="floating-badge">
+                    <p style="font-weight: 800; font-size: 1.2rem;">4.7 ★</p>
+                    <p style="font-size: 0.7rem; color: var(--muted);">Google Rating (472 Reviews)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <span class="section-tag reveal">Our Expertise</span>
+                <h2 class="reveal" style="font-size: 3rem; font-weight: 800;">Premium <span class="gradient-text">Studio Services</span></h2>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="bento-card glass span-6 reveal">
+                    <h3>Bridal & Occasion Makeup</h3>
+                    <p>International grade products for your most precious moments. Long-wear, HD, and Airbrush options.</p>
+                </div>
+                <div class="bento-card glass span-6 reveal">
+                    <h3>Advanced Hair Sculpting</h3>
+                    <p>From keratin treatments to avant-garde styling and precision cutting by senior stylists.</p>
+                </div>
+                <div class="bento-card glass span-4 reveal">
+                    <h3>Derm-Clinical Facials</h3>
+                    <p>Scientifically backed skin rejuvenation and hydration protocols.</p>
+                </div>
+                <div class="bento-card glass span-4 reveal">
+                    <h3>Nail Artistry</h3>
+                    <p>Contemporary gel extensions and custom hand-painted designs.</p>
+                </div>
+                <div class="bento-card glass span-4 reveal">
+                    <h3>Global Color Studio</h3>
+                    <p>Professional balayage, ombré, and total transformations with premium dyes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section section-padding">
+        <div class="container about-grid">
+            <div class="reveal">
+                <span class="section-tag">Elite Standards</span>
+                <h2 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 2rem;">Professionalism <span class="gradient-text">Refined.</span></h2>
+                <p style="color: var(--muted); margin-bottom: 2rem; font-size: 1.1rem;">Kaya Beauty Studio has been the benchmark for aesthetic excellence in Kanpur for over a decade. Located in the heart of Kidwai Nagar, we offer a sanctuary of sophistication where science meets style.</p>
+                <div class="glass" style="padding: 2rem; border-left: 4px solid var(--accent);">
+                    <p style="font-weight: 600;">"Our mission is to empower every individual by revealing their most authentic and radiant self through expert care and premium technology."</p>
+                </div>
+            </div>
+            <div class="reveal">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85" alt="Luxury Studio" class="about-image">
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section-padding">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <span class="section-tag reveal">Client Voices</span>
+                <h2 class="reveal" style="font-size: 3rem; font-weight: 800;">Loved by <span class="gradient-text">Thousands</span></h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="test-card glass reveal">
+                    <div class="rating">★★★★★</div>
+                    <p>"The best bridal makeup experience I could have asked for. They understood my skin tone perfectly and the glow lasted all night!"</p>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=Ananya+S&background=2c3e50&color=fff" alt="User">
+                        <div>
+                            <h4 style="font-size: 0.9rem;">Ananya Singh</h4>
+                            <p style="font-size: 0.7rem; color: var(--muted);">Verified Bride</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card glass reveal">
+                    <div class="rating">★★★★★</div>
+                    <p>"Professional staff and world-class hygiene standards. Their hair spa is legendary. Definitely the top studio in Kanpur."</p>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=Rohan+M&background=2c3e50&color=fff" alt="User">
+                        <div>
+                            <h4 style="font-size: 0.9rem;">Rohan Malhotra</h4>
+                            <p style="font-size: 0.7rem; color: var(--muted);">Regular Client</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card glass reveal">
+                    <div class="rating">★★★★★</div>
+                    <p>"I've been coming here for 5 years. The consistency in quality and the friendly atmosphere keeps me coming back every month."</p>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=Priya+V&background=2c3e50&color=fff" alt="User">
+                        <div>
+                            <h4 style="font-size: 0.9rem;">Priya Verma</h4>
+                            <p style="font-size: 0.7rem; color: var(--muted);">Fashion Stylist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section-padding">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <span class="section-tag reveal">Visual Tour</span>
+                <h2 class="reveal" style="font-size: 3rem; font-weight: 800;">Studio <span class="gradient-text">Showcase</span></h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=85" alt="Gallery 1"></div>
+                <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=85" alt="Gallery 2"></div>
+                <div class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=85" alt="Gallery 3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container reveal">
+        <div class="cta-banner">
+            <h2 class="reveal">Ready for your <span class="gradient-text">Glow Up?</span></h2>
+            <p class="reveal" style="margin-bottom: 3rem; font-size: 1.2rem; color: var(--muted);">Book your premium appointment today and experience the Kaya difference.</p>
+            <a href="https://wa.me/919936445695" target="_blank" class="cta-btn" style="padding: 1.5rem 3rem; font-size: 1.1rem;">WHATSAPP US NOW</a>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="reveal">
+                    <span class="section-tag">Find Us</span>
+                    <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 3rem;">Get in <span class="gradient-text">Touch.</span></h2>
+                    
+                    <a href="tel:+919936445695" style="text-decoration: none; color: inherit;">
+                        <div class="info-card glass">
+                            <div class="info-icon">📞</div>
+                            <div>
+                                <h4 style="margin-bottom: 0.5rem;">Phone</h4>
+                                <p style="color: var(--muted);">+91 99364 45695</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/919936445695" target="_blank" style="text-decoration: none; color: inherit;">
+                        <div class="info-card glass">
+                            <div class="info-icon">💬</div>
+                            <div>
+                                <h4 style="margin-bottom: 0.5rem;">WhatsApp</h4>
+                                <p style="color: var(--muted);">Available for Instant Booking</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="info-card glass">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">Address</h4>
+                            <p style="color: var(--muted);">128/63, near jagat janani maa Durga mandir, K Block, Kidwai Nagar, Kanpur, Uttar Pradesh 208011, India</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="map-container reveal">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3572.716173007559!2d80.32551477542278!3d26.4326553769359!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c4709d29834cf%3A0xc3f169622d109b85!2sK%20Block%2C%20Kidwai%20Nagar%2C%20Kanpur%2C%20Uttar%20Pradesh%20208011!5e0!3m2!1sen!2sin!4v1715694852932!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <a href="#" class="logo" style="font-size: 2rem;">KAYA.</a>
+            <div class="footer-links">
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Privacy Policy</a>
+            </div>
+            <p style="color: var(--muted); font-size: 0.8rem;">&copy; 2024 Kaya Beauty Studio. All rights reserved. Designed for Premium Aesthetics.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor Glow
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal Animations
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // Counter Animation
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseFloat(entry.target.getAttribute('data-count'));
+                    let count = 0;
+                    const increment = target / 50;
+                    const updateCount = () => {
+                        if (count < target) {
+                            count += increment;
+                            entry.target.innerText = target % 1 === 0 ? Math.ceil(count) : count.toFixed(1);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            entry.target.innerText = target;
+                        }
+                    };
+                    updateCount();
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(c => counterObserver.observe(c));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html></html>
